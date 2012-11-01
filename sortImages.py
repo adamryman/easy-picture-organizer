@@ -87,7 +87,6 @@ def fixMetaData():
 	fileInfoList.remove([""])
 	#For each file we want to get its name, fix it's metadata (the YYYY:MM:DD format seems to be broken sometimes and is YYYY:MMDD:DD)
 	#I take the :MMDD: (which is at index 11) and only take the first two values which is MM and replace the meta data with a new YYYY:DD
-	
 	print("Starting new stuff")
 	for files in fileInfoList:
 		name = ""
@@ -109,9 +108,6 @@ def fixMetaData():
 		os.system(fixMetaDataCommand)
 		print("")
 
-		#The name is at index 1, just getting rid of the stuff around it
-		
-		#For some reason it only works if I do it twice
 	print("Finished fixing MetaData")
 	print("")
 
