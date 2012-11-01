@@ -103,7 +103,7 @@ def fixMetaData():
 	print("")
 
 if __name__ == '__main__':
-	fixMetaData()
+	#fixMetaData()
 	renameImagesWithMetaData()
 	sortImages()
 	print(" ")

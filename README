@@ -1,0 +1,17 @@
+Easy Picture Sorter
+========
+
+Thank you Jhead for being awesome! Author: Matthias Wandel Site: http://www.sentex.net/~mwandel/jhead/
+
+Useage
+------- 
+
+Place jpg images with metadata into the same directory as the script and Jhead.
+
+I had a lot of images with broken metadata, they were in a YYYY:MMDD:DD format. I wrote something to fix that but it is commented out by default.
+
+Run the script and it will rename images in YYYYMMDD-HHMMSS format without overwriting images taken at the same time.
+
+It will then sort them into folders by year and then month.
+
+Have fun!
