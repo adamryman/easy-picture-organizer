@@ -61,21 +61,13 @@ def sortImages():
 	print("Finish Sorting")
 
 def fixMetaData():
-
-	#Damn, need to fix cheaty way of finding date and spliting the file
-	#I should loop for File name and Date/Time instead of magic numbers
-
-
 	print("")
 	print("Fixing MetaData")
 	#Get the System output
 	allPictures = os.popen(currentPath + "/./Jhead *").read()
-	#Break it into sections based on collens, it is easy to get the date that way
+
 	allPicturesBrokenApart = allPictures.split("\n")
-	print(allPicturesBrokenApart)
-	print("")
-	print("")
-	#Remove the last value to make it even
+
 	fileInfoList= []
 
 	lastValue = 0
@@ -87,7 +79,6 @@ def fixMetaData():
 	fileInfoList.remove([""])
 	#For each file we want to get its name, fix it's metadata (the YYYY:MM:DD format seems to be broken sometimes and is YYYY:MMDD:DD)
 	#I take the :MMDD: (which is at index 11) and only take the first two values which is MM and replace the meta data with a new YYYY:DD
-	print("Starting new stuff")
 	for files in fileInfoList:
 		name = ""
 		date = ""
