@@ -61,6 +61,7 @@ def sortImages():
 	print("Finish Sorting")
 
 def fixMetaData():
+	print("")
 	print("Fixing MetaData")
 	#Get the System output
 	allPictures = os.popen(currentPath + "/./Jhead *").read()
@@ -68,12 +69,11 @@ def fixMetaData():
 	allPicturesBrokenApart = allPictures.split(":")
 	#Remove the last value to make it even
 	allPicturesBrokenApart.remove(allPicturesBrokenApart[len(allPicturesBrokenApart) - 1])
-
 	fileInfoList= []
 	i = 0
 	nextNumber = 0
 	#Break the huge list into lists for each file, each one has 15 fields and that is why we break at 15
-	while( i < len(h)/15):
+	while( i < len(allPicturesBrokenApart)/15):
 		fileInfoList.append(allPicturesBrokenApart[nextNumber:nextNumber + 15])
 		nextNumber = nextNumber + 15
 		i = i + 1
@@ -88,9 +88,10 @@ def fixMetaData():
 		os.system(fixMetaDataCommand)
 		os.system(fixMetaDataCommand)
 	print("Finished fixing MetaData")
+	print("")
 
 if __name__ == '__main__':
 	fixMetaData()
 	renameImagesWithMetaData()
-	#sortImages()
+	sortImages()
 	print(" ")
