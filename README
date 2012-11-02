@@ -11,14 +11,15 @@ img_4.jpg
 somethingsomething2012.jpg
 
 And does this!:
+(Folder System)
 2010
-	02 - Feb
-		20100223-145430.jpg
+	->02 - Feb
+		->20100223-145430.jpg
 2011
-	05 - May
-		20110515-174144.jpg
-	09 - Sept
-		20110902-035119.jpg
+	->05 - May
+		->20110515-174144.jpg
+	->09 - Sept
+		->20110902-035119.jpg
 
 Useage
 ------- 
