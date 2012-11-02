@@ -3,6 +3,23 @@ Easy Picture Sorter
 
 Thank you Jhead for being awesome! Author: Matthias Wandel Site: http://www.sentex.net/~mwandel/jhead/
 
+Results
+------- 
+Takes this:
+fdasfdas.jpg
+img_4.jpg
+somethingsomething2012.jpg
+
+And does this!:
+2010
+	02 - Feb
+		20100223-145430.jpg
+2011
+	05 - May
+		20110515-174144.jpg
+	09 - Sept
+		20110902-035119.jpg
+
 Useage
 ------- 
 
