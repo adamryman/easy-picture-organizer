@@ -2,10 +2,11 @@ import os
 import re
 import filecmp
 import time
+import sys
 
 
 currentPath = "" + os.getcwd()
-
+JheadPath = currentPath + "/./Jhead"
 def getMonth(month):
 	months = ["01 - Jan", "02 - Feb", "03 - Mar", "04 - Apr",
 	"05 - May", "06 - Jun", "07 - July", "08 - Aug", "09 - Sept",
@@ -102,8 +103,19 @@ def fixMetaData():
 	print("Finished fixing MetaData")
 	print("")
 
-if __name__ == '__main__':
-	#fixMetaData()
+def main():
+	if len(sys.argv) > 1:
+		if not sys.argv[1] == '0':
+			JheadPath = sys.argv[1]
+	
+	if len(sys.argv) > 2:
+		if sys.argv[2] == '0':
+			fixMetaData()
+
 	renameImagesWithMetaData()
 	sortImages()
 	print(" ")
+
+if __name__ == '__main__':
+	main()
+	
