@@ -7,14 +7,17 @@ import sys
 
 currentPath = "" + os.getcwd()
 JheadPath = currentPath + "/./Jhead"
+
+#Take a month as an string and returns a nice month name
 def getMonth(month):
 	months = ["01 - Jan", "02 - Feb", "03 - Mar", "04 - Apr",
 	"05 - May", "06 - Jun", "07 - July", "08 - Aug", "09 - Sept",
 	 "10 - Oct", "11 - Nov", "12 - Dec"]
 	month = int(month)
 	return months[month - 1]
+
 def getSortedPath(name):
-	return currentPath + "/" + name[0:4] + "/" + getMonth(name[4:6]) + "/" + name
+	return currentPath + "/" + name[0:4] + "/" + getMonth(name[5:7]) + "/" + name
 
 def checkIfFile(name,originalName):
 	path = getSortedPath(name)
@@ -30,26 +33,21 @@ def checkIfFile(name,originalName):
 def recursiveMoveToSortedPath(name, originalName):
 	if checkIfFile(name,originalName):
 		print(name + " " + originalName)
-		endOfOldName = name[15:name.__len__()]
-		newName = name[0:15] + '-' + endOfOldName
+		endOfOldName = name[19:name.__len__()]
+		newName = name[0:19] + '-' + endOfOldName
 		recursiveMoveToSortedPath(newName,originalName)
 		return
+	print(originalName)
 	os.renames(originalName,getSortedPath(name))
 
 def moveToSortedPath(name):
 	recursiveMoveToSortedPath(name,name)
-	
-def renameImagesWithMetaData():
-	print("Renameing Images:")
-	os.system(currentPath + "/./Jhead -nf%Y%m%d-%H%M%S *")
-	print("Finished Renaming")
-	print("")
 
-def sortImages():
+def sortImages(regex):
 	files = os.listdir(os.getcwd())
 	stuffToRemove = []
 	for stuff in files:
-		if not (re.search('.jpg',stuff)):
+		if not (re.search(regex,stuff)):
 			stuffToRemove.append(stuff)
 	for stuff in stuffToRemove:
 		files.remove(stuff)
@@ -60,6 +58,36 @@ def sortImages():
 	for picture in files:
 		moveToSortedPath(picture)
 	print("Finish Sorting")
+
+def renameAllWith(regex):
+	files = os.listdir(os.getcwd())
+	stuffToRemove = []
+	for stuff in files:
+		if not (re.search(regex,stuff)):
+			stuffToRemove.append(stuff)
+	for stuff in stuffToRemove:
+		files.remove(stuff)
+	for stuff in files:
+		renameFilesWithCreationData(stuff)
+
+def renameFilesWithCreationData(passedFile):
+	unixTimeStamp = os.popen("find " + passedFile +  ' file -type f -exec stat -f "%m" {} \;' ).read()
+	unixTimeStamp = unixTimeStamp.strip(" \n\t\r")
+	#unixTimeStamp = unixTimeStamp[0:len(unixTimeStamp) - 2])
+	print("a")
+	command = "date -r " + unixTimeStamp + " +'%Y-%m-%d %H-%M-%S'"
+	print(command)
+	dateFileFormat =  os.popen("date -r " + unixTimeStamp + " +'%Y-%m-%d %H-%M-%S'" ).read()
+	print("b")
+	dateFileFormat = dateFileFormat.strip(" \n\t\r")
+	print(dateFileFormat)
+	os.renames(passedFile, dateFileFormat + "." + passedFile.split(".")[1])
+
+def renameImagesWithMetaData():
+	print("Renameing Images:")
+	os.system(currentPath + "/./Jhead -nf'%Y-%m-%d %H-%M-%S' *")
+	print("Finished Renaming")
+	print("")
 
 def fixMetaData():
 	print("")
@@ -95,6 +123,7 @@ def fixMetaData():
 		print(name)
 		print(date)
 		fixMetaDataCommand = currentPath + "/./Jhead -ds" + date + " " + name
+		#For some reason this breaks the metadata before it fixes it. It needs to execute 3 times to always work. I am looking into this.
 		os.system(fixMetaDataCommand)
 		os.system(fixMetaDataCommand)
 		os.system(fixMetaDataCommand)
@@ -104,16 +133,20 @@ def fixMetaData():
 	print("")
 
 def main():
-	if len(sys.argv) > 1:
-		if not sys.argv[1] == '0':
-			JheadPath = sys.argv[1]
-	
-	if len(sys.argv) > 2:
-		if sys.argv[2] == '0':
-			fixMetaData()
+#	if len(sys.argv) > 1:
+#		if not sys.argv[1] == '0':
+#			JheadPath = sys.argv[1]
 
+	fixMetaData()
+ 	#renameAllWith(".png|.PNG|.mov|.MOV|.mp4|.MP4")
 	renameImagesWithMetaData()
-	sortImages()
+#	if len(sys.argv) > 2:
+#		if sys.argv[2] == '0':
+	sortImages(".jpg|.JPG")
+	#sortImages(".jpg|.JPG|.png|.PNG|.mov|.MOV|.mp4|.MP4")
+
+	
+	
 	print(" ")
 
 if __name__ == '__main__':
